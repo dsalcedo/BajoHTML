@@ -151,7 +151,7 @@ class widget_secciones extends WP_Widget
                   $params = array(
                         'numberposts' => 3,
                         'showposts'   => 3,
-                        'category'    => $azul,
+                        'category'    => $turquesa,
                         'orderby'     => 'ID',
                         'order'       => 'DESC',
                         'post_status' => 'publish');
@@ -165,7 +165,8 @@ class widget_secciones extends WP_Widget
                             else:
                               $md='col-md-6';
                               $image='<a href="'.get_permalink($bp->ID).'">'.get_the_post_thumbnail( $bp->ID, 'seccion_box',array('class'=>'img-responsive','title'=>$bp->post_title)).'</a>';
-                              endif;?>
+                              endif;
+                          ?>
                           <div class="<?php echo $md;?>">
                            <?php echo $image;?>
                             <p class="Arvo background-lucite text-center padding-15-t padding-15-b size-20 ">
@@ -178,12 +179,10 @@ class widget_secciones extends WP_Widget
                         endforeach;
                         wp_reset_postdata();
                 ?>
-
             </div>
           </div>
-
-          </div>
         </div>
+      </div>
         <?php
       }
   }

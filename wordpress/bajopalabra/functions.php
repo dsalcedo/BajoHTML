@@ -87,11 +87,59 @@ function custom_image_size() {
 }
 
 
+function wpb_set_post_views($postID) {
+    $count_key = 'wpb_post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
+    if($count==''){
+        $count = 0;
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+    }else{
+        $count++;
+        update_post_meta($postID, $count_key, $count);
+    }
+}
+function wpb_get_post_views($postID){
+    $count_key = 'wpb_post_views_count';
+    $count = get_post_meta($postID, $count_key, true);
+    if($count==''){
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+        return "0 visitas";
+    }
+    return $count.' visitas';
+}
+add_filter('manage_posts_columns', 'posts_column_views');
+//
+add_action('manage_posts_custom_column', 'posts_custom_column_views',5,2);
+
+function posts_column_views($defaults){
+    $defaults['post_views'] = __('Visitas',1);
+    return $defaults;
+}
+function posts_custom_column_views($column_name, $id){
+        if($column_name === 'post_views'){
+        echo wpb_get_post_views(get_the_ID());
+    }
+}
+/*
+<?php 
+$popularpost = new WP_Query( array( 'posts_per_page' => 4, 'meta_key' => 'wpb_post_views_count', 'orderby' => 'meta_value_num', 'order' => 'DESC'  ) );
+while ( $popularpost->have_posts() ) : $popularpost->the_post();
+
+the_title();
+
+endwhile;
+?>
+*/
+//To keep the count accurate, lets get rid of prefetching
+remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+
 // Pagination for paged posts, Page 1, Page 2, Page 3, with Next and Previous Links, No plugin
 function html5wp_pagination()
 {
     global $wp_query;
-    $big = 999999999;
+    $big = 999999;
     echo paginate_links(array(
         'base' => str_replace($big, '%#%', get_pagenum_link($big)),
         'format' => '?paged=%#%',

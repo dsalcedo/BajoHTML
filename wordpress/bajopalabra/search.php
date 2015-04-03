@@ -7,7 +7,7 @@ input[type="text"], textarea {
 	color: #8B8B8B;
 }
 </style>
-<div class="container">
+<div class="container padding-20-b">
 	<div class="col-md-9 right-orange">
 		<h4 class="uppercase Arvo font-blue bold col-md-12">
 			Resultados de búsqueda
@@ -59,9 +59,18 @@ input[type="text"], textarea {
         			</div>
         		</div>
         	</div>
-		<?php endwhile; 
-		else:
+		<?php endwhile; ?>
+			<div class="col-md-12" style="padding-top:15px;padding-bottom:15px;">
+				<div class="row">
+				<?php if ($wp_query->max_num_pages>1):  ?>
+					<span class="pull-left uppercase gray-flat">Mostrando <?php echo  $wp_query->post_count;?> de <?php echo $wp_query->found_posts; ?> resultados</span>
+					<div class="pull-right"><?php  wpc_pagination();?></div>
+				<?php endif; ?>
+				</div>
+			</div>		
+		<?php else:
 			echo "<h3 class='col-md-12 text-center'>Lo sentimos, no hay resultados de búsqueda :(</h3>";
+
 		endif;?>
 		<div class="col-md-12">
 			<div class="row">

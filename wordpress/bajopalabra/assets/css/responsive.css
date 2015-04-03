@@ -24,8 +24,16 @@
 }
 
 @media(min-width:768px){}
-@media(min-width:992px){}
+@media(min-width:992px){
+	#homepage > .col-md-12{
+		  max-width: 1170px!important;
+	}
+
+}
 @media(min-width:1200px){
+	#homepage > .col-md-12{
+		  max-width: 1170px;
+	}
 	.custom-container{
 	  padding-right: 60px;
 	  padding-left: 60px;
